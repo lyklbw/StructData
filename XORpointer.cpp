@@ -12,7 +12,7 @@ a⊕(a⊕b)=(a⊕a)⊕b=b
 /*分析
 right==left^p->LRPtr  left==right^p->LRPtr 这是怎么来的呢？
 */
-#include<iostream>
+/*#include<iostream>
 using namespace std;
 typedef struct XorNode{
     char data;
@@ -51,3 +51,4 @@ void TraversingLinkList(XorLinkedList &L,char d)
          }
       }
 }
+*/
