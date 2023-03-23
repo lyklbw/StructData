@@ -1,0 +1,1 @@
+using this fill to put the notes about data struct
