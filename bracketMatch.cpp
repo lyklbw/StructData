@@ -40,22 +40,29 @@ Status Pop(Sqstack &S,SElemType &e) { //出站
 Status BraketMatch(char*arr,int length) {
 	Sqstack S;
 	InitStack(S);
-	char topElem;
 	for(int i=0; i<length; i++) {
-		if(arr[i]=='('||arr[i]=='{'||arr[i]=='[') {
+		if(arr[i]=='('||arr[i]!='['||arr[i]!='{'||arr[i]==')'||arr[i]!=']'||arr[i]!='}') continue;//可以在处理数学式子了
+		if(arr[i]=='('||arr[i]=='['||arr[i]=='{') {
 			Push(S,arr[i]);//左括号则入栈
 		} 
 		else { 
+			char topElem;
 			//栈顶元素出栈
 			if(emptyStack(S))
-				return false;//遇到右括号且当前栈空,匹配失败	
-				Pop(S,topElem);
-			if(arr[i]==')'&&topElem!='(')
+				return false;//遇到右括号且当前栈空,匹配失败
+				Pop(S,topElem);			
+			if(arr[i]==')'){
+				if(topElem!='(')
 				return false;
-			if(arr[i]==']'&&topElem!='[')
+			}
+			if(arr[i]==']'){
+				if(topElem!='[')
 				return false;
-			if(arr[i]=='}'&&topElem!='{')
+			}
+			if(arr[i]=='}'){
+				if(topElem!='{')
 				return false;
+			}
 		}
 }
 
@@ -64,7 +71,7 @@ Status BraketMatch(char*arr,int length) {
 
 int main() {
 //	"[]{[]}";
-	char *arr ="({[]})";
+	char *arr ="(+{*[we]})";
 	if(BraketMatch(arr,strlen(arr)))
 		printf("匹配成功！");
 	else
