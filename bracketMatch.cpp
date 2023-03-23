@@ -9,29 +9,29 @@
 using namespace std;
 typedef  char SElemType;
 typedef  int Status;
-typedef struct {  //¶¨ÒåÒ»¸öÕ»
-	SElemType *base; //Õ»¶¥
-	SElemType *top;  //Õ»µ×
-	int stacksize;   //Õ»µÄ³¤¶È
+typedef struct {  //å®šä¹‰ä¸€ä¸ªæ ˆ
+	SElemType *base; //æ ˆé¡¶
+	SElemType *top;  //æ ˆåº•
+	int stacksize;   //æ ˆçš„é•¿åº¦
 } Sqstack;
-Status InitStack(Sqstack &S) { //Ë³ĞòÕ»µÄ³õÊ¼»¯
-	S.base=new SElemType[MAXSIZE]; //Õ»µÄ»ùµØÖ·
+Status InitStack(Sqstack &S) { //é¡ºåºæ ˆçš„åˆå§‹åŒ–
+	S.base=new SElemType[MAXSIZE]; //æ ˆçš„åŸºåœ°å€
 	if(!S.base) exit(OVERFLOW);
 	S.top=S.base;
 	S.stacksize=MAXSIZE;
 	return OK;
 }
-Status emptyStack(Sqstack S) {     //¿ÕÕ»
+Status emptyStack(Sqstack S) {     //ç©ºæ ˆ
 	if(S.top==S.base)
-		return OK;//¿Õ·µ»Ø1 
+		return OK;//ç©ºè¿”å›1 
 	else return 0;
 }
-Status Push(Sqstack &S,SElemType e) { //ÈëÕ»
+Status Push(Sqstack &S,SElemType e) { //å…¥æ ˆ
 	if(S.top-S.base==S.stacksize)  return ERROR;
 	*S.top++=e;
 	return OK;
 }
-Status Pop(Sqstack &S,SElemType &e) { //³öÕ¾
+Status Pop(Sqstack &S,SElemType &e) { //å‡ºç«™
 	if(S.top==S.base)
 		return ERROR;
 	e=*--S.top;
@@ -41,15 +41,15 @@ Status BraketMatch(char*arr,int length) {
 	Sqstack S;
 	InitStack(S);
 	for(int i=0; i<length; i++) {
-		if(arr[i]=='('||arr[i]!='['||arr[i]!='{'||arr[i]==')'||arr[i]!=']'||arr[i]!='}') continue;//¿ÉÒÔÔÚ´¦ÀíÊıÑ§Ê½×ÓÁË
+		if(arr[i]=='('||arr[i]!='['||arr[i]!='{'||arr[i]==')'||arr[i]!=']'||arr[i]!='}') continue;//å¯ä»¥åœ¨å¤„ç†æ•°å­¦å¼å­äº†
 		if(arr[i]=='('||arr[i]=='['||arr[i]=='{') {
-			Push(S,arr[i]);//×óÀ¨ºÅÔòÈëÕ»
+			Push(S,arr[i]);//å·¦æ‹¬å·åˆ™å…¥æ ˆ
 		} 
 		else { 
 			char topElem;
-			//Õ»¶¥ÔªËØ³öÕ»
+			//æ ˆé¡¶å…ƒç´ å‡ºæ ˆ
 			if(emptyStack(S))
-				return false;//Óöµ½ÓÒÀ¨ºÅÇÒµ±Ç°Õ»¿Õ,Æ¥ÅäÊ§°Ü
+				return false;//é‡åˆ°å³æ‹¬å·ä¸”å½“å‰æ ˆç©º,åŒ¹é…å¤±è´¥
 				Pop(S,topElem);			
 			if(arr[i]==')'){
 				if(topElem!='(')
@@ -65,15 +65,16 @@ Status BraketMatch(char*arr,int length) {
 			}
 		}
 }
-
-	return emptyStack(S);//È«²¿Æ¥ÅäÍêºó,Õ»¿ÕÔòËµÃ÷Æ¥Åä³É¹¦
+	int result=emptyStack(S);
+ 	delete S.base;
+	return result;//å…¨éƒ¨åŒ¹é…å®Œå,æ ˆç©ºåˆ™è¯´æ˜åŒ¹é…æˆåŠŸ
 }
 
 int main() {
 //	"[]{[]}";
 	char *arr ="(+{*[we]})";
 	if(BraketMatch(arr,strlen(arr)))
-		printf("Æ¥Åä³É¹¦£¡");
+		printf("åŒ¹é…æˆåŠŸï¼");
 	else
-		printf("Æ¥ÅäÊ§°Ü£¡");
+		printf("åŒ¹é…å¤±è´¥ï¼");
 }
