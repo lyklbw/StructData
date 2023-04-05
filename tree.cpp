@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<malloc.h> 
 #include<queue>
+#include<vector>
 #include<algorithm>
 typedef struct TreeNode *BinTree;
 struct TreeNode{
